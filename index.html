@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pergunta</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: white;
+    }
+
+    .container {
+        text-align: center;
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+    }
+
+    .frase {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .area-botoes {
+        position: relative;
+        width: 100%;
+        height: 200px;
+    }
+
+    button {
+        width: 120px;
+        height: 50px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        position: absolute;
+    }
+
+    #sim {
+        background: #2ecc71;
+        color: black;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 20px;
+    }
+
+    #nao {
+        background: #e74c3c;
+        color: white;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 100px;
+    }
+
+    .mensagem {
+        display: none;
+        margin-top: 20px;
+        font-size: 22px;
+    }
+
+    .foguete {
+        position: fixed;
+        bottom: -40px;
+        font-size: 28px;
+        animation: subir 2s linear forwards;
+        pointer-events: none;
+    }
+
+    @keyframes subir {
+        to {
+            transform: translateY(-120vh);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="frase" contenteditable="true">
+        Bel, vc vai esfregar a perereca na cara do Cacau?
+    </div>
+
+    <div class="area-botoes">
+        <button id="sim">SIM</button>
+        <button id="nao">NÃO</button>
+    </div>
+
+    <div class="mensagem" id="mensagem">
+        🎉 Uhuuuu! Cacau ficará muito feliz🚀🎉
+    </div>
+</div>
+
+<script>
+const nao = document.getElementById("nao");
+const sim = document.getElementById("sim");
+const mensagem = document.getElementById("mensagem");
+const area = document.querySelector(".area-botoes");
+
+// NÃO foge (mouse + toque)
+["mouseenter", "touchstart"].forEach(evento => {
+    nao.addEventListener(evento, fugir);
+});
+
+function fugir() {
+    const maxX = area.clientWidth - nao.offsetWidth;
+    const maxY = area.clientHeight - nao.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    nao.style.left = x + "px";
+    nao.style.top = y + "px";
+}
+
+// SIM funciona
+sim.addEventListener("click", () => {
+    mensagem.style.display = "block";
+    foguetes();
+});
+
+function foguetes() {
+    for (let i = 0; i < 15; i++) {
+        const f = document.createElement("div");
+        f.className = "foguete";
+        f.innerText = "🚀";
+        f.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(f);
+
+        setTimeout(() => f.remove(), 2000);
+    }
+}
+</script>
+
+</body>
+</html>
